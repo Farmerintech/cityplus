@@ -133,8 +133,8 @@ const form = useForm({
               name="email"
               children={(field) => {
                 const isInvalid =
-                  field.state.meta.isTouched && !field.state.meta.isValid;
-
+                  loginSchema.shape.email.safeParse(field.name)
+                  
                 return (
                   <Field data-invalid={isInvalid}>
                     <FieldLabel htmlFor={field.name}>Email</FieldLabel>
@@ -148,6 +148,8 @@ const form = useForm({
                       }
                       placeholder="alice@gmail.com"
                     />
+                                    {isInvalid && <FieldError errors={field.state.meta.errors} />}
+
                   </Field>
                   
                 );

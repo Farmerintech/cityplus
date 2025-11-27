@@ -8,6 +8,7 @@ import { Sidebar } from "../sideBar";
 import Yakub from "../../assets/yakub.jpg";
 import { Notify } from "@/app/Components/notifications";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Input } from "@/components/ui/input";
 // Fetch user data
 export const getUserData = async (token: string) => {
   const response = await fetch("https://pwk.onrender.com/api/user/get_users", {
@@ -65,7 +66,7 @@ export default function AdminDash(){
         <aside
           className="
             fixed md:relative inset-y-0 left-0 bg-white z-50
-            md:w-[250px] transition-all duration-300
+            md:w-[250px] transition-all duration-300 min-h-screen
           "
         >
           <Sidebar
@@ -77,15 +78,18 @@ export default function AdminDash(){
         {/* Main */}
         <main className="md:w-full md:overflow-x-hidden md:ml-0">
           {/* Header */}
-          <div className="bg-white pt-5 py-2 flex justify-end gap-8 md:justify-end items-center px-5">
-
-            <button onClick={() => setShowNotify(true)}>
+          <div className="bg-white shadow-md pt-5 py-4 flex justify-between gap-8 md:justify-between items-center px-5">
+            <p className="hidden md:block">Dashboard</p>
+            <div className="flex gap-2 items-center">
+              <Input />
+              <button onClick={() => setShowNotify(true)}>
               <FaBell size={20} className="text-gray-600" />
             </button>
             <Avatar>
   <AvatarImage src="https://github.com/shadcn.png" />
   <AvatarFallback>CN</AvatarFallback>
 </Avatar>
+            </div>
           </div>
 
           {/* Welcome */}

@@ -1,42 +1,51 @@
 "use client";
 
 import {
-  MdDashboard,
-  MdPerson,
-  MdApps,
-  MdHistory,
-  MdSettings,
-  MdSupport,
   MdLogout,
   MdMenu,
 } from "react-icons/md";
-
 import { useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import {
+  BriefcaseBusiness,
+  CalendarCheck,
+  HelpCircle,
+  History,
+  LayoutDashboard,
+  LineChart,
+  Settings,
+  Store,
+  User,
+  Users,
+  Wallet,
+} from "lucide-react";
 
-const navItems = [
-  { name: "Dashboard", icon: <MdDashboard size={24} />, path: "/dashboard" },
-  { name: "Identity", icon: <MdPerson size={24} />, path: "/identity" },
-  { name: "Apps", icon: <MdApps size={24} />, path: "/apps" },
-  { name: "History", icon: <MdHistory size={24} />, path: "/history" },
-  { name: "Settings", icon: <MdSettings size={24} />, path: "/settings" },
-  { name: "Support", icon: <MdSupport size={24} />, path: "/support" },
-];
-
-interface ISide_Bar {
+interface ISideBarProps {
   name: string;
   image: string;
 }
 
-export const Sidebar = ({ name, image }: ISide_Bar) => {
-  const [active, setActive] = useState("/dashboard");
-  const [open, setOpen] = useState(false); // mobile toggle
-  const router = useRouter();
+const navItems = [
+  { name: "Overview", icon: <LayoutDashboard size={24} />, path: "/dashboard_overview" },
+  { name: "User Management", icon: <User size={24} />, path: "/user_management" },
+  { name: "Community & Posts", icon: <Users size={24} />, path: "/posts" },
+  { name: "Events", icon: <CalendarCheck size={24} />, path: "/event" },
+  { name: "Marketplace", icon: <Store size={24} />, path: "/marketplace" },
+  { name: "Business & Vendor Management", icon: <BriefcaseBusiness size={24} />, path: "/business" },
+  { name: "Payment & Commissions", icon: <Wallet size={24} />, path: "/payment" },
+  { name: "Community Update & Resources", icon: <History size={24} />, path: "/resources" },
+  { name: "Support & Moderations", icon: <HelpCircle size={24} />, path: "/support" },
+  { name: "Analytics & Insight", icon: <LineChart size={24} />, path: "/analytics" },
+  { name: "System Settings", icon: <Settings size={24} />, path: "/settings" },
+];
 
-  const handleLogout = () => {
-    router.push("/");
-  };
+export const Sidebar = ({ name, image }: ISideBarProps) => {
+  const [open, setOpen] = useState(false); // Mobile toggle
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleLogout = () => router.push("/");
 
   return (
     <>
@@ -50,55 +59,48 @@ export const Sidebar = ({ name, image }: ISide_Bar) => {
 
       {/* Sidebar */}
       <aside
-        className={`
-          fixed top-0 left-0 h-screen w-64 bg-white shadow-lg z-50
+        className={`fixed top-0 left-0 h-screen w-64 bg-white shadow-lg z-50
           transform transition-transform duration-300
           md:translate-x-0
           ${open ? "translate-x-0" : "-translate-x-full"}
         `}
       >
-        <div className="mt-8 px-5 mb-8">
-          <p>Jami Admin</p>
+        <div className="mt-8 px-5 mb-4 relative">
+          <p className="font-bold text-lg">Jami Admin</p>
 
           {/* Close Button on Mobile */}
           <button
-            className="md:hidden absolute top-4 right-4 text-gray-700"
+            className="md:hidden absolute top-0 right-0 p-2 text-gray-700"
             onClick={() => setOpen(false)}
           >
             ✕
           </button>
         </div>
 
-        {/* Nav Items */}
-        <nav className="px-4 flex flex-col gap-2">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              href={item.path}
-              onClick={() => setActive(item.path)}
-              className={`
-                flex items-center gap-3 px-4 py-3 rounded-lg transition
-                ${active === item.path
-                  ? "bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
-                  : "text-gray-800 hover:bg-gray-100"}
-              `}
-            >
-              {item.icon}
-              <span className="text-[15px] font-medium">{item.name}</span>
-            </Link>
-          ))}
+        {/* Navigation */}
+        <nav className="px-4 flex flex-col gap-2 overflow-y-auto h-[calc(100%-160px)]">
+          {navItems.map((item) => {
+            const isActive = pathname?.startsWith(item.path);
+            return (
+              <Link
+                key={item.name}
+                href={item.path}
+                onClick={() => setOpen(false)}
+                className={`flex items-center gap-3 px-4 py-3 rounded-lg transition
+                  ${isActive
+                    ? "bg-foreground text-background hover:bg-[#383838] dark:hover:bg-[#ccc]"
+                    : "text-gray-800 hover:bg-gray-100"
+                  }`}
+              >
+                {item.icon}
+                <span className="text-[15px] font-medium">{item.name}</span>
+              </Link>
+            );
+          })}
         </nav>
 
         {/* User Section */}
         <div className="absolute bottom-0 w-full px-4 py-6 border-t border-gray-100">
-          <div className="flex items-center gap-3 mb-4">
-            <img
-              src={image}
-              alt="User"
-              className="w-9 h-9 rounded-full object-cover border"
-            />
-            <p className="font-medium text-gray-900">{name}</p>
-          </div>
 
           <button
             onClick={handleLogout}
