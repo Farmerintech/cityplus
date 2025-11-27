@@ -81,7 +81,7 @@ export default function AdminDash(){
           <div className="bg-white shadow-md pt-5 py-4 flex justify-between gap-8 md:justify-between items-center px-5">
             <p className="hidden md:block">Dashboard</p>
             <div className="flex gap-2 items-center">
-              <Input className="ml-10 md:ml-0" />
+              <Input className="ml-10 md:ml-0" placeholder="search..."/>
               <button onClick={() => setShowNotify(true)}>
               <FaBell size={20} className="text-gray-600" />
             </button>
