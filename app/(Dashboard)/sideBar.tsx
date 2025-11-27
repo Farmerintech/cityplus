@@ -51,7 +51,7 @@ export const Sidebar = ({ name, image }: ISideBarProps) => {
     <>
       {/* Mobile Toggle Button */}
       <button
-        className="md:hidden fixed top-1 left-4 z-50 p-2 bg-white/50 backdrop-blur-md rounded"
+        className="md:hidden fixed top-1 mt-4 left-4 z-50 p-2 bg-white/50 backdrop-blur-md rounded"
         onClick={() => setOpen(true)}
       >
         <MdMenu size={28} />
