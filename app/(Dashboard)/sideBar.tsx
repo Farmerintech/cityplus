@@ -115,7 +115,7 @@ export const Sidebar = ({ name, image }: ISideBarProps) => {
       {/* Mobile Overlay */}
       {open && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-30 z-40 md:hidden"
+          className="fixed inset-0 bg-opacity-30 z-40 md:hidden"
           onClick={() => setOpen(false)}
         ></div>
       )}
